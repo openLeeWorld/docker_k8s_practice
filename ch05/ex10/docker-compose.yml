@@ -1,0 +1,23 @@
+version: "3"
+
+services: 
+  djangotest:
+    build: ./myDjango04
+    networks:
+      - composenet01
+    restart: always # 정지되면 재실행
+
+  nginxtest:
+    build: ./myNginx04
+    networks:
+      - composenet01
+    ports: # 도커 호스트 포트: 컨테이너 포트
+      - "8080:80"
+    depends_on: # 실행 순서를 지정
+      - djangotest
+    restart: always
+
+networks:
+  composenet01:
+
+  

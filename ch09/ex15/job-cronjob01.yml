@@ -1,0 +1,15 @@
+apiVersion: batch/v1 # 잡의 경우
+kind: Job
+metadata:
+  name: job-test01
+spec: # 잡 내부 상태 정의
+  template:
+    spec:
+      containers: # 컨테이너 설정
+      - name: nginx-test01
+        image: nginx:1.25
+        command: ["echo", "Hello, k8s!"] # Job을 통해 실행할 명령어 
+      restartPolicy: Never # 재시작 정책
+  backoffLimit: 3 # 잡이 실패할 때 재시도 횟수
+ 
+  

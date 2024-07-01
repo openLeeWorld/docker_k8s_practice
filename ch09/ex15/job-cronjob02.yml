@@ -1,0 +1,20 @@
+apiVersion: batch/v1 # 크론잡의 경우
+kind: CronJob
+metadata:
+  name: cronjob-test02
+spec: # 크론잡 내부 상태 정의
+  schedule: "*/1 * * * *" # 크론잡의 스케줄(매 1분마다 실행)
+  jobTemplate: # 크론잡 탬플릿 안에
+    spec:
+      template: # 템플릿 설정
+        spec:
+          containers: # 컨테이너 설정
+          - name: nginx-test02
+            image: nginx:1.25
+            command: 
+            - /bin/sh
+            - -c
+            - echo Hello k8s! # Job을 통해 실행할 명령어 
+          restartPolicy: Never # 재시작 정책
+ 
+  

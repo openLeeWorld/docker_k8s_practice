@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1 # 인그레스 오브젝트의 경우
+kind: Ingress
+metadata:
+  name: flask-ingress
+  annotations: # 인그레스 컨트롤러에 대한 옵션 설정
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec: # 인그레스 오브젝트 내부 상태
+  ingressClassName: nginx # kubectl get ingressclass로 확인 가능
+  rules: # 인그레스 규칙
+  - http: # http 사용
+      paths: # 여기서는 한 가지 경로만 사용
+      - path: /test02 # url에서는 /test01로 접근, 실제로는 /로 감
+        pathType: Prefix # 경로의 접두사가 일치하면 경로 작용
+        # pathType: Exact # 경로가 정확히 일치해야 경로 작용
+        backend: # 백엔드 설정
+          service: # 인그레스에 연동할 서비스 등록
+            name: flask-service
+            port:
+              number: 80
+  

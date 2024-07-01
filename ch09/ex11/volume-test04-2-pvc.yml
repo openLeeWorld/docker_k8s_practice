@@ -1,0 +1,12 @@
+apiVersion: v1 # 외부 서버에 연결하는 pv의 경우
+kind: PersistentVolumeClaim # pvc
+metadata: # 다른 오브젝트와 구분하는 식별자
+  name: pvc-01
+spec: 
+  accessModes:
+  - ReadWriteOnce # 단 하나의 노드만이 읽기, 쓰기를 위해 마운트
+  resources:
+    requests:
+      storage: 30Mi
+  storageClassName: pv-test-01 # pv와 연결할 storageClass 이름
+

@@ -1,0 +1,17 @@
+apiVersion: apps/v1 # 디플로이먼트의 경우
+kind: Deployment
+metadata: # 다른 오브젝트와 구분하는 식별자
+  name: ingress-deploy-test01
+spec: # 앞으로 생성할 디플로이먼트의 상태를 지정
+  replicas: 3
+  selector: # 파드에 라벨을 붙이는 옵션(디플로이먼트가 관리할 파드 연결)
+    matchLabels: # 파드를 생성했을 때의 이름과 동일
+      app.kubernetes.io/name: web-deploy01
+  template: # 생성할 파드의 정보를 표현
+    metadata:
+      labels: # 디플로이먼트의 라벨과 동일한 파드 라벨
+        app.kubernetes.io/name: web-deploy01
+    spec: # 파드의 스펙
+      containers: # 파드에 포함될 컨테이너들을 지정
+        - name: nginx
+          image: nginx:1.25

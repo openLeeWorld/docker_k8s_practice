@@ -1,0 +1,16 @@
+apiVersion: v1 # 외부 서버에 연결하는 pv의 경우
+kind: PersistentVolume # pv
+metadata: # 다른 오브젝트와 구분하는 식별자
+  name: pv-01
+spec: 
+  accessModes:
+  - ReadWriteOnce # 단 하나의 노드만이 읽기, 쓰기를 위해 마운트
+  capacity:
+    storage: 100Mi
+  persistentVolumeReclaimPolicy: Retain # pv와 pvc 연결에 대한 정책 옵션(reclaim: 초기화)
+  # Retain: pvc가 삭제되어도 pv 내부의 데이터는 그대로 유지하는 옵션
+  # Delete: pvc가 삭제되면 pv 내부의 데이터도 삭제하는 옵션
+  storageClassName: pv-test-01 # pvc와 연결할 storageClass 이름
+  hostPath: # 여기서는 로컬이지만 nfs로 다른 서버도 가능
+    path: /home/amy/work/volhost1 # pv가 연결할 외부 서버 경로
+
